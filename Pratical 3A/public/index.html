@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Node.js App</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+    }
+
+    .card {
+      border-radius: 15px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .btn-custom {
+      background-color: #4facfe;
+      color: white;
+      border: none;
+    }
+
+    .btn-custom:hover {
+      background-color: #00c6ff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+
+    <h1>🚀 Welcome to Node.js App</h1>
+    <p class="mb-4">This is Practical 3A - Node.js Server</p>
+
+    <button class="btn btn-custom btn-lg" onclick="showMessage()">
+      Click Me
+    </button>
+
+  </div>
+
+  <script>
+    function showMessage() {
+      alert("Node.js Server is Running Successfully!");
+    }
+  </script>
+
+</body>
+</html>

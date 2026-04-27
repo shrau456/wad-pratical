@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Movie Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    body, .ui-page { font-family: 'Poppins', sans-serif !important; }
+
+    .ui-header {
+      background-color: #1e1e2f !important;
+      color: white !important;
+      border: none;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 30px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    .ui-btn { border-radius: 8px !important; }
+
+    img { border-radius: 8px; }
+  </style>
+</head>
+
+<body>
+
+<div data-role="page" id="home">
+
+  <div data-role="header">
+    <h1>Movie Hub 🎬</h1>
+  </div>
+
+  <div class="ui-content">
+
+    <div class="hero">
+      <i class="fa-solid fa-film"></i>
+      <h2>Discover Movies</h2>
+      <p>Search & book your favorite movies</p>
+    </div>
+
+    <a href="#movies" class="ui-btn ui-btn-b">Browse Movies</a>
+    <a href="#theater" class="ui-btn">Find Theaters</a>
+
+  </div>
+</div>
+
+<div data-role="page" id="movies">
+
+  <div data-role="header">
+    <a href="#home" data-icon="back">Back</a>
+    <h1>Movies</h1>
+  </div>
+
+  <div class="ui-content">
+
+    <input type="text" id="search" placeholder="Search movies...">
+    <button onclick="searchMovies()" class="ui-btn ui-btn-b">Search</button>
+
+    <ul id="movieList" data-role="listview" data-inset="true"></ul>
+
+  </div>
+</div>
+
+<div data-role="page" id="theater">
+
+  <div data-role="header">
+    <a href="#home" data-icon="back">Back</a>
+    <h1>Theaters</h1>
+  </div>
+
+  <div class="ui-content" style="text-align:center;">
+    <i class="fa-solid fa-location-dot" style="font-size:50px; color:red;"></i>
+    <h3>City Mall Cinema</h3>
+    <p>Near Central Plaza</p>
+
+    <hr>
+
+    <h4>Show Timings</h4>
+    <p>10 AM | 2 PM | 6 PM | 9 PM</p>
+  </div>
+</div>
+
+<div data-role="page" id="book" data-dialog="true">
+
+  <div data-role="header">
+    <h1>Confirm Booking</h1>
+  </div>
+
+  <div class="ui-content" style="text-align:center;">
+    <i class="fa-solid fa-ticket" style="font-size:40px; color:green;"></i>
+    <h3>Book Ticket?</h3>
+    <p>Your seat will be reserved instantly.</p>
+
+    <a href="#home" class="ui-btn ui-btn-b">Confirm</a>
+    <a href="#" data-rel="back" class="ui-btn">Cancel</a>
+  </div>
+</div>
+
+<script>
+
+const API_KEY = "9070068c306b92f1a878a1f91197301d";
+const IMG_URL = "https://image.tmdb.org/t/p/w500";
+
+$(document).on("pageshow", "#movies", function () {
+  loadMovies();
+});
+
+function loadMovies() {
+  $.ajax({
+    url: `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`,
+    method: "GET",
+    success: function (data) {
+      displayMovies(data.results);
+    }
+  });
+}
+
+function searchMovies() {
+  let query = $("#search").val();
+
+  $.ajax({
+    url: `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`,
+    method: "GET",
+    success: function (data) {
+      displayMovies(data.results);
+    }
+  });
+}
+
+function displayMovies(movies) {
+  let output = "";
+
+  movies.forEach(movie => {
+    output += `
+      <li>
+        <a href="#book" data-rel="dialog">
+          <img src="${IMG_URL + movie.poster_path}" style="height:100px;">
+          <h2>${movie.title}</h2>
+          <p>Rating: ${movie.vote_average}</p>
+        </a>
+      </li>
+    `;
+  });
+
+  $("#movieList").html(output).listview("refresh");
+}
+
+</script>
+
+</body>
+</html>

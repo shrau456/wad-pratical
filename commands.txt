@@ -1,0 +1,11 @@
+pratical 2C (angular)
+cd user-app
+ng serve -o
+
+pratical 3A
+cd "Pratical 3A"
+node server.js
+
+pratical 3B
+cd node-crud-api
+node server.js
